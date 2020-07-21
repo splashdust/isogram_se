@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import * as THREE from "three";
-import { LineMaterial } from "three/examples/jsm/lines/LineMaterial.js";
-import { Line2 } from "three/examples/jsm/lines/Line2.js";
-import { LineGeometry } from "three/examples/jsm/lines/LineGeometry.js";
+import { SpinningCube } from "./SpinningCube";
+
+var animateId: number = -1;
 
 const ThreeScene = () => {
-  const [scene, setScene] = useState(new THREE.Scene());
-  const [camera, setCamera] = useState(
+  const [scene] = useState(new THREE.Scene());
+  const [camera] = useState(
     new THREE.PerspectiveCamera(
       75,
       window.innerWidth / window.innerHeight,
@@ -14,153 +14,47 @@ const ThreeScene = () => {
       1000
     )
   );
-  const [renderer, setRenderer] = useState(new THREE.WebGLRenderer());
-  const [material, useMaterial] = useState(
-    new LineMaterial({
-      color: 0xffffff,
-      linewidth: 0.005,
-      vertexColors: false,
-    })
-  );
-  const [lineBox, setLineBox] = useState(new THREE.Object3D());
+  const [renderer] = useState(new THREE.WebGLRenderer());
+  const [lineBox] = useState(new SpinningCube());
+  const [isAnimating, setIsAnimating] = useState(true);
   const renderEl = useRef<HTMLDivElement>(document.createElement("div"));
 
-  const animate = () => {
-    requestAnimationFrame(animate);
-
-    lineBox.rotation.x += 0.01;
-    lineBox.rotation.y += 0.01;
-
-    renderer.render(scene, camera);
-  };
-
   useEffect(() => {
-    getBoxLines(1, 1, 1).forEach((line) =>
-      lineBox.add(new Line2(line, material))
-    );
-
     renderer.setSize(window.innerWidth, window.innerHeight);
-    scene.add(lineBox);
-    camera.position.z = 5;
+    scene.add(lineBox.object);
+    camera.position.z = 50;
 
     renderEl.current.appendChild(renderer.domElement);
+  }, [camera, scene, lineBox, renderer]);
+
+  useEffect(() => {
+    const animate = () => {
+      isAnimating && lineBox.animate();
+
+      renderer.render(scene, camera);
+      animateId = requestAnimationFrame(animate);
+    };
+
+    cancelAnimationFrame(animateId);
     animate();
-  });
+  }, [isAnimating, lineBox, renderer, scene, camera]);
 
   return (
     <div>
       <div ref={renderEl}></div>
+      <button
+        onClick={() => setIsAnimating(!isAnimating)}
+        style={{
+          position: "absolute",
+          zIndex: 999,
+          top: "1rem",
+          right: "1rem",
+        }}
+      >
+        Toggle cube anim
+      </button>
     </div>
   );
 };
-
-function getBoxLines(width: number, height: number, depth: number) {
-  width = width * 0.5;
-  height = height * 0.5;
-  depth = depth * 0.5;
-
-  const lines = [];
-
-  lines.push(
-    new LineGeometry().setPositions([
-      -width,
-      -height,
-      -depth,
-      -width,
-      height,
-      -depth,
-    ]),
-    new LineGeometry().setPositions([
-      -width,
-      height,
-      -depth,
-      width,
-      height,
-      -depth,
-    ]),
-    new LineGeometry().setPositions([
-      width,
-      height,
-      -depth,
-      width,
-      -height,
-      -depth,
-    ]),
-    new LineGeometry().setPositions([
-      width,
-      -height,
-      -depth,
-      -width,
-      -height,
-      -depth,
-    ]),
-    new LineGeometry().setPositions([
-      -width,
-      -height,
-      depth,
-      -width,
-      height,
-      depth,
-    ]),
-    new LineGeometry().setPositions([
-      -width,
-      height,
-      depth,
-      width,
-      height,
-      depth,
-    ]),
-    new LineGeometry().setPositions([
-      width,
-      height,
-      depth,
-      width,
-      -height,
-      depth,
-    ]),
-    new LineGeometry().setPositions([
-      width,
-      -height,
-      depth,
-      -width,
-      -height,
-      depth,
-    ]),
-    new LineGeometry().setPositions([
-      -width,
-      -height,
-      -depth,
-      -width,
-      -height,
-      depth,
-    ]),
-    new LineGeometry().setPositions([
-      -width,
-      height,
-      -depth,
-      -width,
-      height,
-      depth,
-    ]),
-    new LineGeometry().setPositions([
-      width,
-      height,
-      -depth,
-      width,
-      height,
-      depth,
-    ]),
-    new LineGeometry().setPositions([
-      width,
-      -height,
-      -depth,
-      width,
-      -height,
-      depth,
-    ])
-  );
-
-  return lines;
-}
 
 export default ThreeScene;
