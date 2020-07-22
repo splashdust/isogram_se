@@ -1,16 +1,16 @@
 import * as THREE from "three";
 
 class Terrain {
+  public object: THREE.Object3D;
+
   private geometry: THREE.BufferGeometry;
   private mesh: THREE.Mesh;
   private dimensions = {
     width: 200,
     height: 200,
-    widthSegments: 30,
-    heightSegments: 30,
+    widthSegments: 25,
+    heightSegments: 25,
   };
-
-  public object: THREE.Object3D;
 
   constructor() {
     this.object = new THREE.Object3D();
@@ -20,12 +20,11 @@ class Terrain {
       this.dimensions.widthSegments,
       this.dimensions.heightSegments
     );
-    const material = new THREE.MeshStandardMaterial({
+    const material = new THREE.MeshBasicMaterial({
       color: 0x666666,
       flatShading: true,
+      wireframe: true,
     });
-
-    console.log("constructing terrain");
 
     this.randomize();
 

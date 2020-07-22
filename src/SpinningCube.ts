@@ -17,7 +17,7 @@ class SpinningCube {
 
     this.object = new THREE.Object3D();
 
-    SpinningCube.getBoxLines(10, 10, 10).forEach((line) =>
+    SpinningCube.getBoxLines(15, 15, 15).forEach((line) =>
       this.object.add(new Line2(line, this.material))
     );
   }
