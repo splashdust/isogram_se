@@ -1,14 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
 import * as THREE from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+
 import { SpinningCube } from "./SpinningCube";
 import { Terrain } from "./Terrain";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { Starfield } from "./Starfield";
 
 let animateId: number = -1;
 const scene = new THREE.Scene();
 const renderer = new THREE.WebGLRenderer();
 const lineBox = new SpinningCube();
 const terrain = new Terrain();
+const starfield = new Starfield();
 const camera = new THREE.PerspectiveCamera(
   75,
   window.innerWidth / window.innerHeight,
@@ -25,14 +28,20 @@ const ThreeScene = () => {
     renderer.setPixelRatio(window.devicePixelRatio);
     camera.position.z = 50;
 
+    scene.fog = new THREE.Fog(0x000000, 80, 200);
     scene.add(lineBox.object);
     scene.add(terrain.object);
+    scene.add(starfield.object);
+
+    lineBox.object.position.y += 10;
+    starfield.object.position.y += 35;
+    starfield.object.position.z -= 35;
 
     const light = new THREE.DirectionalLight(0xffffff, 0.5);
     light.position.set(0, 20, 0);
     scene.add(light);
 
-    terrain.object.position.y += -10;
+    terrain.object.position.y += -15;
 
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.maxPolarAngle = Math.PI * 0.5;
@@ -47,6 +56,7 @@ const ThreeScene = () => {
       if (isAnimating) {
         lineBox.animate();
         terrain.animate();
+        starfield.animate();
       }
 
       renderer.render(scene, camera);
