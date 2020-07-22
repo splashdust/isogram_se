@@ -8,7 +8,7 @@ class SpinningCube {
 
   private material: LineMaterial;
 
-  constructor() {
+  constructor(size: number = 45) {
     this.material = new LineMaterial({
       color: 0xffffff,
       linewidth: 0.005,
@@ -17,15 +17,24 @@ class SpinningCube {
 
     this.object = new THREE.Object3D();
 
-    SpinningCube.getBoxLines(15, 15, 15).forEach((line) =>
-      this.object.add(new Line2(line, this.material))
-    );
+    var geometry = new THREE.BoxBufferGeometry(size, size, size);
+    var material = new THREE.MeshStandardMaterial({
+      color: 0x010101,
+      //wireframe: true,
+      flatShading: true,
+    });
+    var cube = new THREE.Mesh(geometry, material);
+    this.object.add(cube);
+
+    //SpinningCube.getBoxLines(15, 15, 15).forEach((line) =>
+    //  this.object.add(new Line2(line, this.material))
+    //);
   }
 
-  public animate(): void {
-    this.object.rotation.x += 0.01;
-    this.object.rotation.y += 0.02;
-    this.object.rotation.z += 0.005;
+  public animate(speed: number = 0.01): void {
+    this.object.rotation.x += speed;
+    this.object.rotation.y += speed * 2;
+    this.object.rotation.z += speed / 2;
   }
 
   private static getBoxLines(

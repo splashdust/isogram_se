@@ -7,7 +7,7 @@ class Starfield {
   private readonly spriteMaterial: THREE.SpriteMaterial;
   private readonly spriteMap: THREE.Texture;
   private options = {
-    starCount: 2000,
+    starCount: 1000,
     width: 350,
     height: 100,
     depth: 200,
@@ -17,7 +17,7 @@ class Starfield {
     this.spriteMap = new THREE.TextureLoader().load(starSprite);
     this.spriteMaterial = new THREE.SpriteMaterial({
       map: this.spriteMap,
-      color: 0xffffff,
+      color: 0x4444ff,
     });
 
     this.object = new THREE.Object3D();
@@ -27,7 +27,7 @@ class Starfield {
 
   public animate() {
     this.object.children.forEach((star) => {
-      star.position.z += 0.5;
+      star.position.z += 0.25;
 
       if (star.position.z > this.options.depth / 2) {
         star.position.z = -1 * (this.options.depth / 2);

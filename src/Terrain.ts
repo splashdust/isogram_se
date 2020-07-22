@@ -10,6 +10,7 @@ class Terrain {
     height: 200,
     widthSegments: 25,
     heightSegments: 25,
+    strength: 2,
   };
 
   constructor() {
@@ -20,9 +21,10 @@ class Terrain {
       this.dimensions.widthSegments,
       this.dimensions.heightSegments
     );
-    const material = new THREE.MeshBasicMaterial({
-      color: 0x666666,
-      flatShading: true,
+    const material = new THREE.MeshStandardMaterial({
+      color: 0xffffff,
+      flatShading: false,
+      //metalness: 1,
       wireframe: true,
     });
 
@@ -54,7 +56,7 @@ class Terrain {
       y = index++;
       z = index++;
 
-      newPositions[y] -= 0.5;
+      newPositions[y] -= 0.25;
 
       if (newPositions[y] < clippingPoint) {
         let xpos = newPositions[x];
@@ -62,7 +64,10 @@ class Terrain {
           newPositions[y] +
           this.dimensions.height +
           this.dimensions.height / this.dimensions.heightSegments;
-        let zpos = Math.random() * Math.abs(newPositions[x] / 4);
+        let zpos =
+          Math.random() *
+          Math.abs(newPositions[x] / 4) *
+          this.dimensions.strength;
 
         // We're flipping x and z below, in order to keep the correct
         // order after adding to the beginning of the array.
@@ -99,7 +104,10 @@ class Terrain {
       y = index++;
       z = index++;
 
-      newPositions[z] = Math.random() * Math.abs(newPositions[x] / 4);
+      newPositions[z] =
+        Math.random() *
+        Math.abs(newPositions[x] / 4) *
+        this.dimensions.strength;
     }
 
     this.geometry.setAttribute(
