@@ -1,5 +1,4 @@
 import * as THREE from "three";
-import fontface from "./assets/fonts/Overpass Mono_Bold.json";
 import logoPng from "./assets/isogram-logo-1-color-white.png";
 
 class Logo {

@@ -6,9 +6,6 @@ import { SpinningCube } from "./SpinningCube";
 import { Terrain } from "./Terrain";
 import { Starfield } from "./Starfield";
 import { Logo } from "./Logo";
-import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass";
-import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer";
-import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass";
 
 let animateId: number = -1;
 const scene = new THREE.Scene();

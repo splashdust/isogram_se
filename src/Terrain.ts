@@ -24,7 +24,6 @@ class Terrain {
     const material = new THREE.MeshStandardMaterial({
       color: 0xffffff,
       flatShading: true,
-      //metalness: 1,
       wireframe: false,
     });
 
@@ -38,7 +37,6 @@ class Terrain {
   }
 
   public animate() {
-    //this.mesh.position.z += 0.1;
     const newPositions = Array.from(this.geometry.attributes.position.array);
 
     let x = 0,
