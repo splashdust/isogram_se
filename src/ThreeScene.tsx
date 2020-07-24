@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
 
 import { SpinningCube } from "./SpinningCube";
@@ -21,7 +21,6 @@ const camera = new THREE.PerspectiveCamera(
 );
 
 const ThreeScene = () => {
-  const [isAnimating, setIsAnimating] = useState(true);
   const renderEl = useRef<HTMLDivElement>(document.createElement("div"));
 
   useEffect(() => {
@@ -83,18 +82,16 @@ const ThreeScene = () => {
 
   useEffect(() => {
     const animate = () => {
-      if (isAnimating) {
-        terrain.animate();
-        starfield.animate();
-        megaCube.animate(0.0025);
-      }
+      terrain.animate();
+      starfield.animate();
+      megaCube.animate(0.0025);
       renderer.render(scene, camera);
       animateId = requestAnimationFrame(animate);
     };
 
     cancelAnimationFrame(animateId);
     animate();
-  }, [isAnimating]);
+  }, []);
 
   return (
     <div>
