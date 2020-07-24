@@ -10,7 +10,7 @@ class Terrain {
     height: 200,
     widthSegments: 25,
     heightSegments: 25,
-    strength: 2,
+    strength: 1.5,
   };
 
   constructor() {
@@ -23,9 +23,9 @@ class Terrain {
     );
     const material = new THREE.MeshStandardMaterial({
       color: 0xffffff,
-      flatShading: false,
+      flatShading: true,
       //metalness: 1,
-      wireframe: true,
+      wireframe: false,
     });
 
     this.randomize();
@@ -56,7 +56,7 @@ class Terrain {
       y = index++;
       z = index++;
 
-      newPositions[y] -= 0.25;
+      newPositions[y] -= 0.05;
 
       if (newPositions[y] < clippingPoint) {
         let xpos = newPositions[x];

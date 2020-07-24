@@ -1,5 +1,6 @@
 import * as THREE from "three";
-import fontface from "./assets/fonts/Overpass Mono Light_Regular.json";
+import fontface from "./assets/fonts/Overpass Mono_Bold.json";
+import logoPng from "./assets/isogram-logo-1-color-white.png";
 
 class Logo {
   public object: THREE.Object3D;
@@ -7,30 +8,18 @@ class Logo {
   constructor() {
     this.object = new THREE.Object3D();
 
-    const loader = new THREE.FontLoader();
-    const geometry = new THREE.TextBufferGeometry("{isogram}", {
-      font: loader.parse(fontface),
-      size: 80,
-      height: 0,
-      curveSegments: 4,
-      bevelEnabled: false,
-      bevelThickness: 10,
-      bevelSize: 2,
-      bevelOffset: 0,
-      bevelSegments: 8,
+    const spriteMap = new THREE.TextureLoader().load(logoPng);
+    const spriteMaterial = new THREE.MeshBasicMaterial({
+      map: spriteMap,
+      color: 0x333333,
+      transparent: true,
     });
 
-    var material = new THREE.MeshStandardMaterial({
-      color: 0xffffff,
-      //wireframe: true,
-      flatShading: false,
-      emissive: 10000000,
-    });
+    const planeGeom = new THREE.PlaneBufferGeometry(23.94, 15.04);
 
-    const mesh = new THREE.Mesh(geometry, material);
-    mesh.scale.set(0.1, 0.1, 0.1);
+    const plane = new THREE.Mesh(planeGeom, spriteMaterial);
 
-    this.object.add(mesh);
+    this.object.add(plane);
   }
 }
 

@@ -6,11 +6,13 @@ import { SpinningCube } from "./SpinningCube";
 import { Terrain } from "./Terrain";
 import { Starfield } from "./Starfield";
 import { Logo } from "./Logo";
+import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass";
+import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer";
+import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass";
 
 let animateId: number = -1;
 const scene = new THREE.Scene();
-const renderer = new THREE.WebGLRenderer();
-const frontCube = new SpinningCube(20);
+const renderer = new THREE.WebGLRenderer({ antialias: true });
 const megaCube = new SpinningCube(200);
 const terrain = new Terrain();
 const starfield = new Starfield();
@@ -31,46 +33,36 @@ const ThreeScene = () => {
     renderer.setPixelRatio(window.devicePixelRatio);
     camera.position.z = 50;
 
-    scene.fog = new THREE.Fog(0x000000, 80, 200);
-    scene.add(frontCube.object);
+    scene.fog = new THREE.Fog(0xdddddd, 80, 200);
+    scene.background = new THREE.Color(0xdddddd);
     scene.add(terrain.object);
     scene.add(starfield.object);
     scene.add(megaCube.object);
     scene.add(logo.object);
 
-    frontCube.object.position.y += 25;
-    frontCube.object.position.z -= 20;
-    frontCube.object.rotateX(-0.6);
-    frontCube.object.rotateY(-0.45);
-    frontCube.object.rotateZ(-0.5);
-
-    logo.object.position.x -= 28;
-    logo.object.position.y -= 5;
+    logo.object.scale.set(2, 2, 1);
+    logo.object.position.y += 24;
+    logo.object.position.z += -15;
 
     megaCube.object.position.y += 100;
     megaCube.object.position.z -= 240;
 
     starfield.object.position.y += 35;
-    starfield.object.position.z -= 35;
+    starfield.object.position.z -= 5;
 
-    const light = new THREE.PointLight(0xffffff, 0.1);
-    light.position.set(0, 200, 20);
+    const light = new THREE.PointLight(0xffffff, 1);
+    light.position.set(0, 400, 200);
     scene.add(light);
 
-    const light2 = new THREE.PointLight(0x0055ff, 20);
+    const light2 = new THREE.PointLight(0x0055ff, 0.6);
     light2.position.set(200, -150, 20);
     scene.add(light2);
 
-    const light3 = new THREE.PointLight(0x0055ff, 20);
+    const light3 = new THREE.PointLight(0x0055ff, 0.6);
     light3.position.set(-200, -150, 200);
     scene.add(light3);
 
     terrain.object.position.y += -15;
-
-    //const controls = new OrbitControls(camera, renderer.domElement);
-    //controls.maxPolarAngle = Math.PI * 0.5;
-    //controls.minDistance = 10;
-    //controls.maxDistance = 5000;
 
     window.addEventListener("mousemove", (e) => {
       const deltaX = e.clientX - window.innerWidth / 2;
@@ -86,12 +78,10 @@ const ThreeScene = () => {
   useEffect(() => {
     const animate = () => {
       if (isAnimating) {
-        //frontCube.animate(0.01);
         terrain.animate();
         starfield.animate();
         megaCube.animate(0.0025);
       }
-
       renderer.render(scene, camera);
       animateId = requestAnimationFrame(animate);
     };

@@ -19,7 +19,7 @@ class SpinningCube {
 
     var geometry = new THREE.BoxBufferGeometry(size, size, size);
     var material = new THREE.MeshStandardMaterial({
-      color: 0x010101,
+      color: 0xaaaaaa,
       //wireframe: true,
       flatShading: true,
     });

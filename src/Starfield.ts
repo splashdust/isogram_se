@@ -7,17 +7,17 @@ class Starfield {
   private readonly spriteMaterial: THREE.SpriteMaterial;
   private readonly spriteMap: THREE.Texture;
   private options = {
-    starCount: 1000,
-    width: 350,
+    starCount: 500,
+    width: 100,
     height: 100,
-    depth: 200,
+    depth: 100,
   };
 
   constructor() {
     this.spriteMap = new THREE.TextureLoader().load(starSprite);
     this.spriteMaterial = new THREE.SpriteMaterial({
       map: this.spriteMap,
-      color: 0x4444ff,
+      color: 0xffffff,
     });
 
     this.object = new THREE.Object3D();
@@ -27,12 +27,16 @@ class Starfield {
 
   public animate() {
     this.object.children.forEach((star) => {
-      star.position.z += 0.25;
+      star.position.z += 0.05;
+      star.position.y += 0.1;
 
-      if (star.position.z > this.options.depth / 2) {
-        star.position.z = -1 * (this.options.depth / 2);
+      if (
+        star.position.z > this.options.depth / 2 ||
+        star.position.y > this.options.height / 2
+      ) {
+        star.position.z = (Math.random() - 0.5) * this.options.depth;
         star.position.x = (Math.random() - 0.5) * this.options.width;
-        star.position.y = (Math.random() - 0.5) * this.options.height;
+        star.position.y = -1 * (this.options.height / 2);
       }
     });
   }
@@ -43,7 +47,7 @@ class Starfield {
       newStar.position.x = (Math.random() - 0.5) * this.options.width;
       newStar.position.y = (Math.random() - 0.5) * this.options.height;
       newStar.position.z = (Math.random() - 0.5) * this.options.depth;
-      newStar.scale.set(0.5, 0.5, 0.5);
+      newStar.scale.set(0.3, 0.3, 0.3);
       this.object.add(newStar);
     }
   }
