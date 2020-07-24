@@ -93,13 +93,12 @@ class Terrain {
     const newPositions = Array.from(this.geometry.attributes.position.array);
 
     let x = 0,
-      y = 0,
       z = 0,
       index = 0;
 
     for (let i = 0, l = newPositions.length / 3; i < l; i++) {
       x = index++;
-      y = index++;
+      index++; // y
       z = index++;
 
       newPositions[z] =
