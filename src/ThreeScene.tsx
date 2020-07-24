@@ -99,17 +99,6 @@ const ThreeScene = () => {
   return (
     <div>
       <div ref={renderEl}></div>
-      <button
-        onClick={() => setIsAnimating(!isAnimating)}
-        style={{
-          position: "absolute",
-          zIndex: 999,
-          top: "1rem",
-          right: "1rem",
-        }}
-      >
-        Toggle cube anim
-      </button>
     </div>
   );
 };
