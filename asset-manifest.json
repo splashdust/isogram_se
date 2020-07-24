@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/static/css/main.36951f9f.chunk.css",
+    "main.js": "/static/js/main.15c2870f.chunk.js",
+    "main.js.map": "/static/js/main.15c2870f.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.cc0c892a.js",
+    "runtime-main.js.map": "/static/js/runtime-main.cc0c892a.js.map",
+    "static/js/2.6e93a11c.chunk.js": "/static/js/2.6e93a11c.chunk.js",
+    "static/js/2.6e93a11c.chunk.js.map": "/static/js/2.6e93a11c.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.d7938798e3b12505745c8ab122327a55.js": "/precache-manifest.d7938798e3b12505745c8ab122327a55.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/main.36951f9f.chunk.css.map": "/static/css/main.36951f9f.chunk.css.map",
+    "static/js/2.6e93a11c.chunk.js.LICENSE.txt": "/static/js/2.6e93a11c.chunk.js.LICENSE.txt",
+    "static/media/isogram-logo-1-color-white.png": "/static/media/isogram-logo-1-color-white.2f7ae0da.png",
+    "static/media/star.png": "/static/media/star.afb66bc6.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.cc0c892a.js",
+    "static/js/2.6e93a11c.chunk.js",
+    "static/css/main.36951f9f.chunk.css",
+    "static/js/main.15c2870f.chunk.js"
+  ]
+}
